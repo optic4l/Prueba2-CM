@@ -15,6 +15,7 @@ export interface IProduct {
 function App() {
   const [products, setProducts] = useState<IProduct[]>();
   const [isLoading, setLoading] = useState(true)
+  const [error, setError] = useState()
 
 
   useEffect(()=> {
@@ -27,7 +28,7 @@ function App() {
       const resp = (await getProducts()).data
       setProducts(resp.sort((a,b)=> a.price - b.price ))
     } catch (error) {
-      <Error error={error}/>
+      setError(error);
     }finally{
       setLoading(false);
     }
@@ -47,7 +48,8 @@ function App() {
   
   return (
     <>
-      {isLoading ? <Loading/> : (
+      
+      {error ? <Error error={error}/> : isLoading ? <Loading/> : (
        <>
         <div>
           <button onClick={sortAsc}>Ordenar Ascendente</button>
