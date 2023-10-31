@@ -4,8 +4,9 @@ export default function ListadoProductos(props: IProduct){
 
     return (
         <div>
-            <h1>{`Producto ${props.id}`} </h1>
-            <p>{`nombre: ${props.title}, precio: ${props.price}`}</p>
+            <h1>{`Producto id ${props.id}`} </h1>
+            <p>{`nombre: ${props.title}`}</p>
+            <p><strong>{`precio: ${props.price}`} </strong></p>
         </div>
     )
 

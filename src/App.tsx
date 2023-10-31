@@ -25,7 +25,7 @@ function App() {
     setLoading(true)
     try {
       const resp = (await getProducts()).data
-      setProducts(resp)
+      setProducts(resp.sort((a,b)=> a.price - b.price ))
     } catch (error) {
       <Error error={error}/>
     }finally{
@@ -34,23 +34,39 @@ function App() {
   }
 
   const sortAsc = () => {
-    products?.sort((a, b)=> a.price - b.price)
+    const sortedProducts = [...products]; 
+    sortedProducts.sort((a, b) => a.price - b.price);
+    setProducts(sortedProducts);
   }
 
   const sortDes = () => {
-    products?.sort((a, b)=> b.price - a.price)
+    const sortedProducts = [...products]; 
+    sortedProducts.sort((a, b) => b.price - a.price);
+    setProducts(sortedProducts);
   } 
   
   return (
     <>
-    {sortDes()}
       {isLoading ? <Loading/> : (
-        products?.map(({id, title, price})=>{
-          return(
-            <ListadoProductos id={id} title={title} price={price}/>
+       <>
+        <div>
+          <button onClick={sortAsc}>Ordenar Ascendente</button>
+          <button onClick={sortDes}>Ordenar Descendente</button>
+       </div>
+       <ul>
+        {
+          products?.map(({id, title, price})=>(
+            <li key={id}>
+              <ListadoProductos id={id} title={title} price={price}/>
+            </li>
+            )
           )
-        })
-      )}
+        }
+       </ul>
+        
+          
+       </> 
+        )}
       
     </>
   )
